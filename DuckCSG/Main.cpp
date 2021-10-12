@@ -1,7 +1,12 @@
 #include "DuckCSGpch.h"
 
+#include "Log.h"
+
 int main(int argc, char** argv)
 {
-    std::cout << "DuckCSG" << std::endl;
+    DuckCSG::Log::init();
+
+    DC_CORE_INFO("DuckCSG");
+
     return 0;
 }
