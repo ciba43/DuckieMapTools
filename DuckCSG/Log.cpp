@@ -9,7 +9,7 @@ namespace DuckCSG {
 
     void Log::init()
     {
-        spdlog::set_pattern("%^[%T] %v%$");
+        spdlog::set_pattern("%v%$");
         s_logger = spdlog::stdout_color_mt("DuckCSG");
         s_logger->set_level(spdlog::level::trace);
     }
