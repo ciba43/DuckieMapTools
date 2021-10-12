@@ -58,8 +58,8 @@ project "DuckCSG"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("temp/" .. outputdir .. "/%{prj.name}")
 
-    pchheader "DuckCSGpch.h"
-    pchsource "DuckCSG/DuckCSGpch.cpp"
+    pchheader "duckpch.h"
+    pchsource "DuckCSG/duckpch.cpp"
 
     files
     {
