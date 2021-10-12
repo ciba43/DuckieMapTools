@@ -1,0 +1,26 @@
+# Directories to ignore
+.vs
+Debug-*/
+Final-*/
+Release-*/
+temp/
+# the most common meson build directory
+build/
+# vscode appears to use this
+builddir/
+
+# Files to ignore
+*.user
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.users
+imgui.ini
+*.bsp
+# Just to ignore profiling results
+*.json
+# Ignore generated config files
+config.txt
+
+# Linux: Makefiles :)
+Makefile
