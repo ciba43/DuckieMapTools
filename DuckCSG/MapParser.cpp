@@ -164,8 +164,15 @@ namespace MapTools {
         }
 
         mapFile.close();
-        TODO();
 
         return ParseReturnState::OK;
+    }
+
+    Ref<Entity> MapParser::entity(unsigned int handle)
+    {
+        if (handle < m_entities.size())
+            return m_entities.at(handle);
+
+        return {};
     }
 }

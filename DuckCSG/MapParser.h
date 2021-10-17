@@ -35,6 +35,8 @@ namespace MapTools {
         ParseReturnState parse();
 
         // Get all of the parsed properties
+        size_t entityCount() { return m_entities.size(); }
+        Ref<Entity> entity(unsigned int handle);
 
     private:
         ParserState m_state = ParserState::OutsideEntity;
