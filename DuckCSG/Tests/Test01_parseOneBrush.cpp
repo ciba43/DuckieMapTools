@@ -23,7 +23,7 @@ namespace MapTools {
         // Only 1 entity in the test file
         if (parser.entityCount() != 1)
         {
-            setFailDescription("Bad parsed entity count (expected 1, got" + std::to_string(parser.entityCount()) + ")");
+            setFailDescription("Bad parsed entity count (expected 1, got " + std::to_string(parser.entityCount()) + ")");
             return TestResult::Fail;
         }
 
@@ -46,7 +46,7 @@ namespace MapTools {
         // Test map's worldspawn has 9 properties
         if (worldspawn->propertyCount() != 9)
         {
-            setFailDescription("Bad parsed property count (expected 9, got" + std::to_string(worldspawn->propertyCount()) + ")");
+            setFailDescription("Bad parsed property count (expected 9, got " + std::to_string(worldspawn->propertyCount()) + ")");
             return TestResult::Fail;
         }
 
