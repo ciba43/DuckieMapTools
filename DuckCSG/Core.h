@@ -17,25 +17,22 @@
 #define TODO() { DC_CORE_CRITICAL("TODO hit in {0}:{1}", __FILE__, __LINE__); abort(); }
 #endif
 
-namespace DuckCSG {
+// Unique pointers aka Scoped pointers
+template<typename T>
+using Scope = std::unique_ptr<T>;
 
-    // Unique pointers aka Scoped pointers
-    template<typename T>
-    using Scope = std::unique_ptr<T>;
+template<typename T, typename ... Args>
+constexpr Scope<T> createScope(Args&& ... args)
+{
+    return std::make_unique<T>(std::forward<Args>(args)...);
+}
 
-    template<typename T, typename ... Args>
-    constexpr Scope<T> createScope(Args&& ... args)
-    {
-        return std::make_unique<T>(std::forward<Args>(args)...);
-    }
+// Shared pointers aka References
+template<typename T>
+using Ref = std::shared_ptr<T>;
 
-    // Shared pointers aka References
-    template<typename T>
-    using Ref = std::shared_ptr<T>;
-
-    template<typename T, typename ... Args>
-    constexpr Ref<T> createRef(Args&& ... args)
-    {
-        return std::make_shared<T>(std::forward<Args>(args)...);
-    }
+template<typename T, typename ... Args>
+constexpr Ref<T> createRef(Args&& ... args)
+{
+    return std::make_shared<T>(std::forward<Args>(args)...);
 }
