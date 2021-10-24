@@ -142,8 +142,8 @@ namespace MapTools {
             case ParserState::InBrushExpectingStartOfPlanesOrEnd:
             {
                 // CR and LF
-                //if (readCharacter == 0x0A || readCharacter == 0x0D)
-                //continue;
+                if (readCharacter == 0x0A || readCharacter == 0x0D)
+                    continue;
 
                 // End of brush
                 if (readCharacter == '}')
