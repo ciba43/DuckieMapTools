@@ -1,39 +1,19 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace MapTools {
 
-    struct PlanePoint
-    {
-        float x;
-        float y;
-        float z;
-    };
-
-    // TODO:
-    struct UV
-    {
-        float x;
-        float y;
-    };
+    class Plane;
 
     class Brush
     {
     public:
         Brush();
-
-        void setPoint1(PlanePoint point);
-        void setPoint2(PlanePoint point);
-        void setPoint3(PlanePoint point);
-
-        void setTextureString(std::string texture);
-
-        void setUV(UV uv);
-
-        void setScaleU(float scaleU);
-        void setScaleV(float scaleV);
+        void pushPlane(Ref<Plane> plane);
+        bool isValid(); // A brush needs to be at least 4 planes to be considered valid (among other requirements)
     private:
+        std::vector<Ref<Plane>> m_planes;
     };
-
 }

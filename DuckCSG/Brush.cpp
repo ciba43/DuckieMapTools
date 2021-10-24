@@ -1,44 +1,22 @@
 #include "duckpch.h"
 #include "Brush.h"
 
+#include "Plane.h"
+
 namespace MapTools {
 
     Brush::Brush()
     {
     }
 
-    void Brush::setPoint1(PlanePoint point)
+    void Brush::pushPlane(Ref<Plane> plane)
     {
-        DC_CORE_ERROR("Unimplemented Brush::SetPoint1");
+        m_planes.push_back(plane);
     }
 
-    void Brush::setPoint2(PlanePoint point)
+    bool Brush::isValid()
     {
-        DC_CORE_ERROR("Unimplemented Brush::setPoint2");
-    }
-
-    void Brush::setPoint3(PlanePoint point)
-    {
-        DC_CORE_ERROR("Unimplemented Brush::setPoint3");
-    }
-
-    void Brush::setTextureString(std::string texture)
-    {
-        DC_CORE_ERROR("Unimplemented Brush::setTextureString");
-    }
-
-    void Brush::setUV(UV uv)
-    {
-        DC_CORE_ERROR("Unimplemented Brush::setUV");
-    }
-
-    void Brush::setScaleU(float scaleU)
-    {
-        DC_CORE_ERROR("Unimplemented Brush::setScaleU");
-    }
-
-    void Brush::setScaleV(float scaleV)
-    {
-        DC_CORE_ERROR("Unimplemented Brush::setScaleV");
+        // TODO:
+        return false;
     }
 }

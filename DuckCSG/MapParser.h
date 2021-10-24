@@ -7,7 +7,10 @@
 
 namespace MapTools {
 
+    class Brush;
     class Entity;
+    class Plane;
+    struct PlanePoint;
 
     enum class ParseReturnState
     {
@@ -37,7 +40,7 @@ namespace MapTools {
         ExpectingPlane2,
         DoingPlane2,
         ExpectingPlane3,
-        DoingPlane4,
+        DoingPlane3,
     };
 
     enum class ParserPointCoordinateState
@@ -61,6 +64,9 @@ namespace MapTools {
         Ref<Entity> entity(unsigned int handle);
 
         static float parseFloat(const std::string& string);
+    private:
+        void setAppropriatePlanePoint(Ref<Plane> plane, const PlanePoint& point);
+        void incrementPlanePointState();
     private:
         ParserState m_state = ParserState::OutsideEntity;
         ParserPlaneState m_planeState = ParserPlaneState::Outside;

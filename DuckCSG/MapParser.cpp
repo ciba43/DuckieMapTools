@@ -3,6 +3,7 @@
 
 #include "Brush.h"
 #include "Entity.h"
+#include "Plane.h"
 
 namespace MapTools {
 
@@ -31,6 +32,7 @@ namespace MapTools {
         Ref<Entity> currentEntity;
 
         Ref<Brush> temporaryBrush;
+        Ref<Plane> temporaryPlane;
         std::string temporaryPointCoordinateString;
         PlanePoint temporaryPoint;
 
@@ -78,6 +80,10 @@ namespace MapTools {
                 {
                     DC_CORE_TRACE("[Parser] Entering ParserState::InBrushAndExpectingPlaneOrEnd");
                     m_state = ParserState::InBrushExpectingStartOfPlanesOrEnd;
+
+                    // Create a new Brush
+                    temporaryBrush = createRef<Brush>();
+
                     continue;
                 }
 
@@ -156,14 +162,10 @@ namespace MapTools {
                 // Start of the first plane point description
                 if (readCharacter == '(')
                 {
-                    // Create a new Brush
-                    temporaryBrush = createRef<Brush>();
-
                     DC_CORE_TRACE("[Parser] Entering ParserState::InBrushDoingPlanes");
                     m_state = ParserState::InBrushDoingPlanes;
                     m_planeState = ParserPlaneState::DoingPlane1;
                     m_pointCoordinateState = ParserPointCoordinateState::DoingPointX;
-                    temporaryPointCoordinateString.clear();
 
                     continue;
                 }
@@ -173,6 +175,21 @@ namespace MapTools {
             }
             case ParserState::InBrushDoingPlanes:
             {
+                if (m_planeState == ParserPlaneState::ExpectingPlane2 || m_planeState == ParserPlaneState::ExpectingPlane3)
+                {
+                    // End of current plane point
+                    if (readCharacter == ')')
+                        continue;
+
+                    // Start of next plane point
+                    if (readCharacter == '(')
+                    {
+                        incrementPlanePointState();
+                        m_pointCoordinateState = ParserPointCoordinateState::DoingPointX;
+                        continue;
+                    }
+                }
+
                 if (readCharacter == ' ')
                 {
                     // Ignore spaces if we haven't read any data yet
@@ -199,9 +216,10 @@ namespace MapTools {
                         temporaryPoint.z = parseFloat(temporaryPointCoordinateString);
                         temporaryPointCoordinateString.clear();
 
-                        temporaryBrush->setPoint1(temporaryPoint);
-                        m_pointCoordinateState = ParserPointCoordinateState::Outside;
+                        setAppropriatePlanePoint(temporaryPlane, temporaryPoint);
+                        incrementPlanePointState();
 
+                        m_pointCoordinateState = ParserPointCoordinateState::Outside;
                         continue;
                     case ParserPointCoordinateState::Outside:
                     default:
@@ -238,5 +256,59 @@ namespace MapTools {
     {
         // TODO:
         return 0.0f;
+    }
+
+    void MapParser::setAppropriatePlanePoint(Ref<Plane> plane, const PlanePoint& point)
+    {
+        switch (m_planeState)
+        {
+        case ParserPlaneState::DoingPlane1:
+        {
+            plane->setPoint1(point);
+            return;
+        }
+        case ParserPlaneState::DoingPlane2:
+        {
+            plane->setPoint2(point);
+            return;
+        }
+        case ParserPlaneState::DoingPlane3:
+        {
+            plane->setPoint3(point);
+            return;
+        }
+        case ParserPlaneState::Outside:
+        case ParserPlaneState::ExpectingPlane2:
+        case ParserPlaneState::ExpectingPlane3:
+        default:
+            VERIFY_NOT_REACHED();
+            return;
+        }
+    }
+
+    void MapParser::incrementPlanePointState()
+    {
+        switch (m_planeState)
+        {
+        case ParserPlaneState::DoingPlane1:
+            m_planeState = ParserPlaneState::ExpectingPlane2;
+            break;
+        case ParserPlaneState::ExpectingPlane2:
+            m_planeState = ParserPlaneState::DoingPlane2;
+            break;
+        case ParserPlaneState::DoingPlane2:
+            m_planeState = ParserPlaneState::ExpectingPlane3;
+            break;
+        case ParserPlaneState::ExpectingPlane3:
+            m_planeState = ParserPlaneState::DoingPlane3;
+            break;
+        case ParserPlaneState::DoingPlane3:
+            // EXIT
+            TODO();
+            break;
+        case ParserPlaneState::Outside:
+        default:
+            break;
+        }
     }
 }
