@@ -167,6 +167,9 @@ namespace MapTools {
                     m_pointState = ParserPointState::DoingPoint1;
                     m_pointCoordinateState = ParserPointCoordinateState::DoingPointX;
 
+                    // Create a new plane
+                    temporaryPlane = createRef<Plane>();
+
                     continue;
                 }
 
