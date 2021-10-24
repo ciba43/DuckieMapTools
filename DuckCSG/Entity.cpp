@@ -17,6 +17,12 @@ namespace MapTools {
         m_properties.push_back({ property, value });
     }
 
+    void Entity::pushBrush(Ref<Brush> brush)
+    {
+        m_brushes.push_back(brush);
+        TODO();
+    }
+
     std::string Entity::findPropertySlow(std::string name)
     {
         auto iterator = std::find_if(m_properties.begin(), m_properties.end(), [&](const std::pair<std::string, std::string>& entry) {

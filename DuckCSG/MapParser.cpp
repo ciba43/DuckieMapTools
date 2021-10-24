@@ -1,6 +1,7 @@
 #include "duckpch.h"
 #include "MapParser.h"
 
+#include "Brush.h"
 #include "Entity.h"
 
 namespace MapTools {
@@ -28,6 +29,10 @@ namespace MapTools {
         std::string temporaryPropertyValue;
 
         Ref<Entity> currentEntity;
+
+        Ref<Brush> temporaryBrush;
+        std::string temporaryPointCoordinateString;
+        PlanePoint temporaryPoint;
 
         char readCharacter;
         while (!mapFile.eof())
@@ -72,7 +77,7 @@ namespace MapTools {
                 if (readCharacter == '{')
                 {
                     DC_CORE_TRACE("[Parser] Entering ParserState::InBrushAndExpectingPlaneOrEnd");
-                    m_state = ParserState::InBrushAndExpectingPlaneOrEnd;
+                    m_state = ParserState::InBrushExpectingStartOfPlanesOrEnd;
                     continue;
                 }
 
@@ -134,8 +139,12 @@ namespace MapTools {
                 temporaryPropertyValue.push_back(readCharacter);
                 continue;
             }
-            case ParserState::InBrushAndExpectingPlaneOrEnd:
+            case ParserState::InBrushExpectingStartOfPlanesOrEnd:
             {
+                // CR and LF
+                //if (readCharacter == 0x0A || readCharacter == 0x0D)
+                //continue;
+
                 // End of brush
                 if (readCharacter == '}')
                 {
@@ -144,16 +153,65 @@ namespace MapTools {
                     continue;
                 }
 
-                DC_CORE_TRACE("Skipping {0}", readCharacter);
-                continue;
+                // Start of the first plane point description
+                if (readCharacter == '(')
+                {
+                    // Create a new Brush
+                    temporaryBrush = createRef<Brush>();
 
-                TODO();
+                    DC_CORE_TRACE("[Parser] Entering ParserState::InBrushDoingPlanes");
+                    m_state = ParserState::InBrushDoingPlanes;
+                    m_planeState = ParserPlaneState::DoingPlane1;
+                    m_pointCoordinateState = ParserPointCoordinateState::DoingPointX;
+                    temporaryPointCoordinateString.clear();
+
+                    continue;
+                }
+
+                VERIFY_NOT_REACHED();
                 break;
             }
-            case ParserState::InPlane:
+            case ParserState::InBrushDoingPlanes:
             {
-                TODO();
-                break;
+                if (readCharacter == ' ')
+                {
+                    // Ignore spaces if we haven't read any data yet
+                    if (temporaryPointCoordinateString.empty())
+                        continue;
+
+                    // Otherwise we jump to the next coordinate
+                    switch (m_pointCoordinateState)
+                    {
+                    case ParserPointCoordinateState::DoingPointX:
+                        temporaryPoint.x = parseFloat(temporaryPointCoordinateString);
+                        temporaryPointCoordinateString.clear();
+                        m_pointCoordinateState = ParserPointCoordinateState::DoingPointY;
+                        continue;
+
+                    case ParserPointCoordinateState::DoingPointY:
+
+                        temporaryPoint.y = parseFloat(temporaryPointCoordinateString);
+                        temporaryPointCoordinateString.clear();
+                        m_pointCoordinateState = ParserPointCoordinateState::DoingPointZ;
+                        continue;
+
+                    case ParserPointCoordinateState::DoingPointZ: // End of this point
+                        temporaryPoint.z = parseFloat(temporaryPointCoordinateString);
+                        temporaryPointCoordinateString.clear();
+
+                        temporaryBrush->setPoint1(temporaryPoint);
+                        m_pointCoordinateState = ParserPointCoordinateState::Outside;
+
+                        continue;
+                    case ParserPointCoordinateState::Outside:
+                    default:
+                        VERIFY_NOT_REACHED();
+                        break;
+                    }
+                }
+
+                temporaryPointCoordinateString.push_back(readCharacter);
+                continue;
             }
             default:
                 TODO();
@@ -174,5 +232,11 @@ namespace MapTools {
             return m_entities.at(handle);
 
         return {};
+    }
+
+    float MapParser::parseFloat(const std::string & string)
+    {
+        // TODO:
+        return 0.0f;
     }
 }

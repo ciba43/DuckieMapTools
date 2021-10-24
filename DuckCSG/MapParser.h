@@ -19,11 +19,33 @@ namespace MapTools {
     {
         OutsideEntity,
         ExpectingPropertyOrStartOfBrush,
+
+        // Property stuff
         InPropertyName,
         ExpectingPropertyValue,
         InPropertyValue,
-        InBrushAndExpectingPlaneOrEnd,
-        InPlane,
+
+        // Brush stuff
+        InBrushExpectingStartOfPlanesOrEnd,
+        InBrushDoingPlanes,
+    };
+
+    enum class ParserPlaneState
+    {
+        Outside, 
+        DoingPlane1, // Expecting plane 1 is already done by ParserState::InBrushExpectingStartOfPlanesOrEnd
+        ExpectingPlane2,
+        DoingPlane2,
+        ExpectingPlane3,
+        DoingPlane4,
+    };
+
+    enum class ParserPointCoordinateState
+    {
+        Outside,
+        DoingPointX,
+        DoingPointY,
+        DoingPointZ
     };
 
     class MapParser
@@ -38,8 +60,11 @@ namespace MapTools {
         size_t entityCount() { return m_entities.size(); }
         Ref<Entity> entity(unsigned int handle);
 
+        static float parseFloat(const std::string& string);
     private:
         ParserState m_state = ParserState::OutsideEntity;
+        ParserPlaneState m_planeState = ParserPlaneState::Outside;
+        ParserPointCoordinateState m_pointCoordinateState = ParserPointCoordinateState::Outside;
         std::string m_map;
         bool m_parsed = false;
         std::vector<Ref<Entity>> m_entities;
