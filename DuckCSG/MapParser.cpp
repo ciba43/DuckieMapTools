@@ -303,8 +303,9 @@ namespace MapTools {
             m_pointState = ParserPointState::DoingPoint3;
             break;
         case ParserPointState::DoingPoint3:
-            // EXIT
-            TODO();
+            // Exit out of the plane point definitions
+            m_pointState = ParserPointState::Outside;
+            m_state = ParserState::InBrushReadingPlaneTexture;
             break;
         default:
             break;
