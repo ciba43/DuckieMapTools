@@ -29,18 +29,19 @@ namespace MapTools {
         InPropertyValue,
 
         // Brush stuff
-        InBrushExpectingStartOfPlanesOrEnd,
-        InBrushDoingPlanes,
+        InBrushExpectingPlaneOrEnd,
+        InBrushDoingPlanePoints,
+        InBrushReadingPlaneTexture,
     };
 
-    enum class ParserPlaneState
+    enum class ParserPointState
     {
         Outside, 
-        DoingPlane1, // Expecting plane 1 is already done by ParserState::InBrushExpectingStartOfPlanesOrEnd
-        ExpectingPlane2,
-        DoingPlane2,
-        ExpectingPlane3,
-        DoingPlane3,
+        DoingPoint1, // Expecting point 1 is already done by ParserState::InBrushExpectingPlaneOrEnd
+        ExpectingPoint2,
+        DoingPoint2,
+        ExpectingPoint3,
+        DoingPoint3,
     };
 
     enum class ParserPointCoordinateState
@@ -69,7 +70,7 @@ namespace MapTools {
         void incrementPlanePointState();
     private:
         ParserState m_state = ParserState::OutsideEntity;
-        ParserPlaneState m_planeState = ParserPlaneState::Outside;
+        ParserPointState m_pointState = ParserPointState::Outside;
         ParserPointCoordinateState m_pointCoordinateState = ParserPointCoordinateState::Outside;
         std::string m_map;
         bool m_parsed = false;
