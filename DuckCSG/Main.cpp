@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 #endif
 
     // Regular parsing
-    MapTools::MapParser mapParser("test01_fail.map");
+    MapTools::MapParser mapParser("tests/test01_fail.map");
 
     auto parserResult = mapParser.parse();
     if (parserResult == MapTools::ParseReturnState::OK)
