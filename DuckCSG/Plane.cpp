@@ -9,17 +9,17 @@ namespace MapTools {
 
     void Plane::setPoint1(PlanePoint point)
     {
-        DC_CORE_ERROR("Unimplemented Plane::SetPoint1");
+        m_point1 = point;
     }
 
     void Plane::setPoint2(PlanePoint point)
     {
-        DC_CORE_ERROR("Unimplemented Plane::setPoint2");
+        m_point2 = point;
     }
 
     void Plane::setPoint3(PlanePoint point)
     {
-        DC_CORE_ERROR("Unimplemented Plane::setPoint3");
+        m_point3 = point;
     }
 
     void Plane::setTextureString(std::string texture)

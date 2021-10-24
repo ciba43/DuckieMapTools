@@ -34,5 +34,8 @@ namespace MapTools {
         void setScaleU(float scaleU);
         void setScaleV(float scaleV);
     private:
+        PlanePoint m_point1;
+        PlanePoint m_point2;
+        PlanePoint m_point3;
     };
 }
