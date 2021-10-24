@@ -1,6 +1,8 @@
 #include "duckpch.h"
 #include "Entity.h"
 
+#include "Brush.h"
+
 namespace MapTools {
 
     Entity::Entity()

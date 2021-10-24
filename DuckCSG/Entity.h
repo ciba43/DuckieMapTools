@@ -4,8 +4,6 @@
 #include <utility> // For std::pair
 #include <vector>
 
-#include "Brush.h"
-
 namespace MapTools {
 
     enum class EntityType
@@ -13,6 +11,8 @@ namespace MapTools {
         Point,
         Brush
     };
+
+    class Brush;
 
     class Entity
     {
