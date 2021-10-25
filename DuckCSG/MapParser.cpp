@@ -36,6 +36,8 @@ namespace MapTools {
         std::string temporaryPointCoordinateString;
         PlanePoint temporaryPoint;
 
+        std::string temporaryTextureName;
+
         char readCharacter;
         while (!mapFile.eof())
         {
@@ -234,6 +236,48 @@ namespace MapTools {
                 temporaryPointCoordinateString.push_back(readCharacter);
                 continue;
             }
+            case ParserState::InBrushExpectingPlaneTexture:
+            {
+                // Handle end of last plane point
+                if (readCharacter == ')')
+                {
+                    m_state = ParserState::InBrushReadingPlaneTexture;
+                    continue;
+                }
+
+                VERIFY_NOT_REACHED();
+                break;
+            }
+            case ParserState::InBrushReadingPlaneTexture:
+            {
+                // End
+                if (readCharacter == ' ')
+                {
+                    // .. but not if we haven't started reading the texture name
+                    if (temporaryTextureName.empty())
+                        continue;
+
+                    // End
+                    TODO();
+                }
+
+                if (isValidTextureNameCharacter(readCharacter))
+                {
+                    temporaryTextureName.push_back(readCharacter);
+                    continue;
+                }
+                else
+                {
+                    // Temporary TODO: to help capture all available texture name characters
+                    TODO();
+
+                    //VERIFY_NOT_REACHED();
+                    break;
+                }
+
+                VERIFY_NOT_REACHED();
+                break;
+            }
             default:
                 TODO();
                 break;
@@ -259,6 +303,36 @@ namespace MapTools {
     {
         // TODO:
         return 0.0f;
+    }
+
+    bool MapParser::isValidTextureNameCharacter(char character)
+    {
+        // Uppercase letters
+        if (character >= 65 && character <= 90)
+            return true;
+
+         // Lowercase letters
+        if (character >= 97 && character <= 122)
+            return true;
+
+        // Numbers
+        if (character >= 48 && character <= 57)
+            return true;
+
+        switch (character)
+        {
+        case '-': // Random textures
+        case '+': // Triggerable textures
+        case '~':
+        case '_':
+        case '!': // Water and liquids
+        case '{': // Solid textures
+        case '#':
+            return true;
+
+        default:
+            return false;
+        }
     }
 
     void MapParser::setAppropriatePlanePoint(Ref<Plane> plane, const PlanePoint& point)
@@ -305,7 +379,7 @@ namespace MapTools {
         case ParserPointState::DoingPoint3:
             // Exit out of the plane point definitions
             m_pointState = ParserPointState::Outside;
-            m_state = ParserState::InBrushReadingPlaneTexture;
+            m_state = ParserState::InBrushExpectingPlaneTexture;
             break;
         default:
             break;

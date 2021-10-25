@@ -31,6 +31,7 @@ namespace MapTools {
         // Brush stuff
         InBrushExpectingPlaneOrEnd,
         InBrushDoingPlanePoints,
+        InBrushExpectingPlaneTexture,
         InBrushReadingPlaneTexture,
     };
 
@@ -65,6 +66,7 @@ namespace MapTools {
         Ref<Entity> entity(unsigned int handle);
 
         static float parseFloat(const std::string& string);
+        static bool isValidTextureNameCharacter(char character);
     private:
         void setAppropriatePlanePoint(Ref<Plane> plane, const PlanePoint& point);
         void incrementPlanePointState();
