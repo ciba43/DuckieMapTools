@@ -13,6 +13,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Include directories
 includeDir = {}
+includeDir["glm"] = "subprojects/glm"
 includeDir["spdlog"] = "subprojects/spdlog/include"
 
 -- spdlog project premake
@@ -76,7 +77,8 @@ project "DuckCSG"
     includedirs
     {
         "%{prj.location}",
-        "%{includeDir.spdlog}"
+        "%{includeDir.spdlog}",
+        "%{includeDir.glm}"
     }
 
     filter "system:linux"
