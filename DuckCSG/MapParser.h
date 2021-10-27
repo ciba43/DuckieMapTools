@@ -36,7 +36,10 @@ namespace MapTools {
         InBrushExpectingU,
         InBrushReadingU,
         InBrushExpectingV,
-        InBrushReadingV
+        InBrushReadingV,
+        InBrushReadingTextureRotation,
+        InBrushReadingUScale,
+        InBrushReadingVScale
     };
 
     enum class ParserPointState

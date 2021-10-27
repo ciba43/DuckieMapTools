@@ -24,16 +24,16 @@ namespace MapTools {
 
     void Plane::setTextureString(std::string texture)
     {
-        DC_CORE_ERROR("Unimplemented Plane::setTextureString");
+        m_textureName = texture;
     }
 
     void Plane::setScaleU(float scaleU)
     {
-        DC_CORE_ERROR("Unimplemented Plane::setScaleU");
+        m_scaleU = scaleU;
     }
 
     void Plane::setScaleV(float scaleV)
     {
-        DC_CORE_ERROR("Unimplemented Plane::setScaleV");
+        m_scaleV = scaleV;
     }
 }

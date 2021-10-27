@@ -39,6 +39,7 @@ namespace MapTools {
         std::string temporaryTextureName;
 
         std::string temporaryUVvalue;
+        std::string temporaryRotationOrUVScale;
 
         char readCharacter;
         while (!mapFile.eof())
@@ -367,7 +368,7 @@ namespace MapTools {
                 // Exit
                 if (readCharacter == ']')
                 {
-                    TODO();
+                    m_state = ParserState::InBrushReadingUScale;
                     continue;
                 }
 
@@ -409,6 +410,65 @@ namespace MapTools {
                 }
 
                 temporaryUVvalue.push_back(readCharacter);
+                continue;
+            }
+            case ParserState::InBrushReadingTextureRotation:
+            {
+                if (readCharacter == ' ')
+                {
+                    if (temporaryRotationOrUVScale.empty())
+                        continue;
+
+                    // Texture rotation actually isn't used so it should be 0 in most cases
+                    if (temporaryRotationOrUVScale != "0")
+                    {
+                        DC_CORE_ERROR("[Parser] Setting texture rotation isn't supported");
+                        TODO();
+                        break;
+                    }
+
+                    temporaryRotationOrUVScale.clear();
+                    m_state = ParserState::InBrushReadingUScale;
+                    continue;
+                }
+
+                temporaryRotationOrUVScale.push_back(readCharacter);
+                continue;
+            }
+            case ParserState::InBrushReadingUScale:
+            {
+                if (readCharacter == ' ')
+                {
+                    if (temporaryRotationOrUVScale.empty())
+                        continue;
+
+                    temporaryPlane->setScaleU(parseFloat(temporaryRotationOrUVScale));
+                    temporaryRotationOrUVScale.clear();
+                    m_state = ParserState::InBrushReadingVScale;
+                    continue;
+                }
+
+                temporaryRotationOrUVScale.push_back(readCharacter);
+                continue;
+            }
+            case ParserState::InBrushReadingVScale:
+            {
+                if (readCharacter == ' ')
+                {
+                    if (temporaryRotationOrUVScale.empty())
+                        continue;
+
+                    temporaryPlane->setScaleV(parseFloat(temporaryRotationOrUVScale));
+                    temporaryRotationOrUVScale.clear();
+
+                    // Plane is done, we can push it now
+                    temporaryBrush->pushPlane(temporaryPlane);
+
+                    m_state = ParserState::InBrushExpectingPlaneOrEnd;
+                    continue;
+                }
+
+                temporaryRotationOrUVScale.push_back(readCharacter);
                 continue;
             }
             default:

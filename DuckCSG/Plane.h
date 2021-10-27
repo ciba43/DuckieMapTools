@@ -42,5 +42,8 @@ namespace MapTools {
         PlanePoint m_point2;
         PlanePoint m_point3;
         UV m_uv;
+        std::string m_textureName;
+        float m_scaleU;
+        float m_scaleV;
     };
 }
