@@ -33,6 +33,10 @@ namespace MapTools {
         InBrushDoingPlanePoints,
         InBrushExpectingPlaneTexture,
         InBrushReadingPlaneTexture,
+        InBrushExpectingU,
+        InBrushReadingU,
+        InBrushExpectingV,
+        InBrushReadingV
     };
 
     enum class ParserPointState
@@ -53,6 +57,15 @@ namespace MapTools {
         DoingPointZ
     };
 
+    enum class ParserUVState
+    {
+        Outside,
+        DoingNormalX,
+        DoingNormalY,
+        DoingNormalZ,
+        DoingShift
+    };
+
     class MapParser
     {
     public:
@@ -70,10 +83,12 @@ namespace MapTools {
     private:
         void setAppropriatePlanePoint(Ref<Plane> plane, const PlanePoint& point);
         void incrementPlanePointState();
+        void incrementUVState();
     private:
         ParserState m_state = ParserState::OutsideEntity;
         ParserPointState m_pointState = ParserPointState::Outside;
         ParserPointCoordinateState m_pointCoordinateState = ParserPointCoordinateState::Outside;
+        ParserUVState m_parserUVstate = ParserUVState::Outside;
         std::string m_map;
         bool m_parsed = false;
         std::vector<Ref<Entity>> m_entities;

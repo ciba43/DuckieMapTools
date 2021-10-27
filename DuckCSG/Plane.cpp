@@ -27,11 +27,6 @@ namespace MapTools {
         DC_CORE_ERROR("Unimplemented Plane::setTextureString");
     }
 
-    void Plane::setUV(UV uv)
-    {
-        DC_CORE_ERROR("Unimplemented Plane::setUV");
-    }
-
     void Plane::setScaleU(float scaleU)
     {
         DC_CORE_ERROR("Unimplemented Plane::setScaleU");

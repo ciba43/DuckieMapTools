@@ -38,6 +38,8 @@ namespace MapTools {
 
         std::string temporaryTextureName;
 
+        std::string temporaryUVvalue;
+
         char readCharacter;
         while (!mapFile.eof())
         {
@@ -226,6 +228,7 @@ namespace MapTools {
 
                         m_pointCoordinateState = ParserPointCoordinateState::Outside;
                         continue;
+
                     case ParserPointCoordinateState::Outside:
                     default:
                         VERIFY_NOT_REACHED();
@@ -261,7 +264,8 @@ namespace MapTools {
                     temporaryPlane->setTextureString(temporaryTextureName);
                     temporaryTextureName.clear();
 
-                    TODO();
+                    m_state = ParserState::InBrushExpectingU;
+                    continue;
                 }
 
                 if (isValidTextureNameCharacter(readCharacter))
@@ -279,6 +283,133 @@ namespace MapTools {
 
                 VERIFY_NOT_REACHED();
                 break;
+            }
+            case ParserState::InBrushExpectingU:
+            {
+                // Start U component parsing
+                if (readCharacter == '[')
+                {
+                    m_state = ParserState::InBrushReadingU;
+                    m_parserUVstate = ParserUVState::DoingNormalX;
+                    continue;
+                }
+
+                VERIFY_NOT_REACHED();
+                break;
+            }
+            case ParserState::InBrushReadingU:
+            {
+                // Exit
+                if (readCharacter == ']')
+                {
+                    m_state = ParserState::InBrushExpectingV;
+                    continue;
+                }
+
+                if (readCharacter == ' ')
+                {
+                    if (temporaryUVvalue.empty())
+                        continue;
+
+                    switch (m_parserUVstate)
+                    {
+                    case ParserUVState::DoingNormalX:
+                        temporaryPlane->UVstuff().normalU.x = parseFloat(temporaryUVvalue);
+                        incrementUVState();
+                        temporaryUVvalue.clear();
+                        continue;
+
+                    case ParserUVState::DoingNormalY:
+                        temporaryPlane->UVstuff().normalU.y = parseFloat(temporaryUVvalue);
+                        incrementUVState();
+                        temporaryUVvalue.clear();
+                        continue;
+
+                    case ParserUVState::DoingNormalZ:
+                        temporaryPlane->UVstuff().normalU.z = parseFloat(temporaryUVvalue);
+                        incrementUVState();
+                        temporaryUVvalue.clear();
+                        continue;
+
+                    case ParserUVState::DoingShift:
+                        temporaryPlane->UVstuff().shiftU = parseFloat(temporaryUVvalue);
+                        incrementUVState();
+                        temporaryUVvalue.clear();
+                        continue;
+
+                    default:
+                        VERIFY_NOT_REACHED();
+                        break;
+                    }
+                }
+
+                temporaryUVvalue.push_back(readCharacter);
+                continue;
+            }
+            case ParserState::InBrushExpectingV:
+            {
+                if (readCharacter == ' ')
+                    continue;
+
+                // Start V component parsing
+                if (readCharacter == '[')
+                {
+                    m_state = ParserState::InBrushReadingV;
+                    m_parserUVstate = ParserUVState::DoingNormalX;
+                    continue;
+                }
+
+                VERIFY_NOT_REACHED();
+                break;
+            }
+            case ParserState::InBrushReadingV:
+            {
+                // Exit
+                if (readCharacter == ']')
+                {
+                    TODO();
+                    continue;
+                }
+
+                if (readCharacter == ' ')
+                {
+                    if (temporaryUVvalue.empty())
+                        continue;
+
+                    switch (m_parserUVstate)
+                    {
+                    case ParserUVState::DoingNormalX:
+                        temporaryPlane->UVstuff().normalV.x = parseFloat(temporaryUVvalue);
+                        incrementUVState();
+                        temporaryUVvalue.clear();
+                        continue;
+
+                    case ParserUVState::DoingNormalY:
+                        temporaryPlane->UVstuff().normalV.y = parseFloat(temporaryUVvalue);
+                        incrementUVState();
+                        temporaryUVvalue.clear();
+                        continue;
+
+                    case ParserUVState::DoingNormalZ:
+                        temporaryPlane->UVstuff().normalV.z = parseFloat(temporaryUVvalue);
+                        incrementUVState();
+                        temporaryUVvalue.clear();
+                        continue;
+
+                    case ParserUVState::DoingShift:
+                        temporaryPlane->UVstuff().shiftV = parseFloat(temporaryUVvalue);
+                        incrementUVState();
+                        temporaryUVvalue.clear();
+                        continue;
+
+                    default:
+                        VERIFY_NOT_REACHED();
+                        break;
+                    }
+                }
+
+                temporaryUVvalue.push_back(readCharacter);
+                continue;
             }
             default:
                 TODO();
@@ -384,6 +515,29 @@ namespace MapTools {
             m_state = ParserState::InBrushExpectingPlaneTexture;
             break;
         default:
+            VERIFY_NOT_REACHED();
+            break;
+        }
+    }
+
+    void MapParser::incrementUVState()
+    {
+        switch (m_parserUVstate)
+        {
+        case ParserUVState::DoingNormalX:
+            m_parserUVstate = ParserUVState::DoingNormalY;
+            break;
+        case ParserUVState::DoingNormalY:
+            m_parserUVstate = ParserUVState::DoingNormalZ;
+            break;
+        case ParserUVState::DoingNormalZ:
+            m_parserUVstate = ParserUVState::DoingShift;
+            break;
+        case ParserUVState::DoingShift:
+            m_parserUVstate = ParserUVState::Outside;
+            break;
+        default:
+            VERIFY_NOT_REACHED();
             break;
         }
     }

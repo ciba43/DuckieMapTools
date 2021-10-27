@@ -33,7 +33,7 @@ namespace MapTools {
 
         void setTextureString(std::string texture);
 
-        void setUV(UV uv);
+        UV& UVstuff() { return m_uv; }
 
         void setScaleU(float scaleU);
         void setScaleV(float scaleV);
@@ -41,5 +41,6 @@ namespace MapTools {
         PlanePoint m_point1;
         PlanePoint m_point2;
         PlanePoint m_point3;
+        UV m_uv;
     };
 }
