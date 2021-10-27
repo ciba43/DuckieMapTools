@@ -271,8 +271,7 @@ namespace MapTools {
                 }
                 else
                 {
-                    // Temporary TODO: to help capture all available texture name characters
-                    TODO();
+                    DC_CORE_ERROR("[Parser] Illegal texture character hit : {0}", readCharacter);
 
                     VERIFY_NOT_REACHED();
                     break;
