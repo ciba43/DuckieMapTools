@@ -368,7 +368,7 @@ namespace MapTools {
                 // Exit
                 if (readCharacter == ']')
                 {
-                    m_state = ParserState::InBrushReadingUScale;
+                    m_state = ParserState::InBrushReadingTextureRotation;
                     continue;
                 }
 
