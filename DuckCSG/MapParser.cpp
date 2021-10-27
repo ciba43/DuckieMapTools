@@ -159,7 +159,8 @@ namespace MapTools {
                 // End of brush
                 if (readCharacter == '}')
                 {
-                    DC_CORE_TRACE("[Parser] Entering ParserState::ExpectingPropertyOrStartOfBrush");
+                    DC_CORE_TRACE("[Parser] Brush is done - pushing it");
+                    currentEntity->pushBrush(temporaryBrush);
                     m_state = ParserState::ExpectingPropertyOrStartOfBrush;
                     continue;
                 }
