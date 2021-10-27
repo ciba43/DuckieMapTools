@@ -250,7 +250,7 @@ namespace MapTools {
             }
             case ParserState::InBrushReadingPlaneTexture:
             {
-                // End
+                // End ..
                 if (readCharacter == ' ')
                 {
                     // .. but not if we haven't started reading the texture name
@@ -258,6 +258,9 @@ namespace MapTools {
                         continue;
 
                     // End
+                    temporaryPlane->setTextureString(temporaryTextureName);
+                    temporaryTextureName.clear();
+
                     TODO();
                 }
 
@@ -271,7 +274,7 @@ namespace MapTools {
                     // Temporary TODO: to help capture all available texture name characters
                     TODO();
 
-                    //VERIFY_NOT_REACHED();
+                    VERIFY_NOT_REACHED();
                     break;
                 }
 
@@ -299,10 +302,10 @@ namespace MapTools {
         return {};
     }
 
-    float MapParser::parseFloat(const std::string & string)
+    float MapParser::parseFloat(const std::string& string)
     {
-        // TODO:
-        return 0.0f;
+        // TODO: This probably needs some safety checks
+        return std::stof(string);
     }
 
     bool MapParser::isValidTextureNameCharacter(char character)
