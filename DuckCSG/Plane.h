@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include <glm/vec3.hpp>
+
 namespace MapTools {
 
     struct PlanePoint
@@ -11,11 +13,13 @@ namespace MapTools {
         float z;
     };
 
-    // TODO:
     struct UV
     {
-        float x;
-        float y;
+        glm::vec3 normalU;
+        float shiftU;
+
+        glm::vec3 normalV;
+        float shiftV;
     };
 
     class Plane
