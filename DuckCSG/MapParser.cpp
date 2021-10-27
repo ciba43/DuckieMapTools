@@ -453,7 +453,8 @@ namespace MapTools {
             }
             case ParserState::InBrushReadingVScale:
             {
-                if (readCharacter == ' ')
+                // CR and LF and space
+                if (readCharacter == ' ' || readCharacter == 0x0A || readCharacter == 0x0D)
                 {
                     if (temporaryRotationOrUVScale.empty())
                         continue;
