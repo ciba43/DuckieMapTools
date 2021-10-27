@@ -22,7 +22,6 @@ namespace MapTools {
     void Entity::pushBrush(Ref<Brush> brush)
     {
         m_brushes.push_back(brush);
-        TODO();
     }
 
     std::string Entity::findPropertySlow(std::string name)
