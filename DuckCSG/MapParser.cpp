@@ -60,7 +60,6 @@ namespace MapTools {
                     // Create a new entity
                     currentEntity = createRef<Entity>();
 
-                    DC_CORE_TRACE("[Parser] Entering ParserState::ExpectingPropertyOrStartOfBrush");
                     m_state = ParserState::ExpectingPropertyOrStartOfBrush;
                     continue;
                 }
@@ -76,14 +75,12 @@ namespace MapTools {
 
                 if (readCharacter == '"')
                 {
-                    DC_CORE_TRACE("[Parser] Entering ParserState::InPropertyName");
                     m_state = ParserState::InPropertyName;
                     continue;
                 }
 
                 if (readCharacter == '{')
                 {
-                    DC_CORE_TRACE("[Parser] Entering ParserState::InBrushExpectingPlaneOrEnd");
                     m_state = ParserState::InBrushExpectingPlaneOrEnd;
 
                     // Create a new Brush
@@ -99,7 +96,6 @@ namespace MapTools {
                     m_entities.push_back(currentEntity);
                     currentEntity.reset();
 
-                    DC_CORE_TRACE("[Parser] Entering ParserState::OutsideEntity");
                     m_state = ParserState::OutsideEntity;
                     continue;
                 }
@@ -111,7 +107,6 @@ namespace MapTools {
             {
                 if (readCharacter == '"')
                 {
-                    DC_CORE_TRACE("[Parser] Entering ParserState::ExpectingPropertyValue");
                     m_state = ParserState::ExpectingPropertyValue;
                     continue;
                 }
@@ -122,7 +117,6 @@ namespace MapTools {
             {
                 if (readCharacter == '"')
                 {
-                    DC_CORE_TRACE("[Parser] Entering ParserState::InPropertyValue");
                     m_state = ParserState::InPropertyValue;
                     continue;
                 }
@@ -143,7 +137,6 @@ namespace MapTools {
                     temporaryPropertyName.clear();
                     temporaryPropertyValue.clear();
 
-                    DC_CORE_TRACE("[Parser] Entering ParserState::ExpectingPropertyOrStartOfBrush");
                     m_state = ParserState::ExpectingPropertyOrStartOfBrush;
                     continue;
                 }
@@ -159,7 +152,6 @@ namespace MapTools {
                 // End of brush
                 if (readCharacter == '}')
                 {
-                    DC_CORE_TRACE("[Parser] Brush is done - pushing it");
                     currentEntity->pushBrush(temporaryBrush);
                     m_state = ParserState::ExpectingPropertyOrStartOfBrush;
                     continue;
@@ -168,7 +160,6 @@ namespace MapTools {
                 // Start of the first plane point description
                 if (readCharacter == '(')
                 {
-                    DC_CORE_TRACE("[Parser] Entering ParserState::InBrushDoingPlanePoints");
                     m_state = ParserState::InBrushDoingPlanePoints;
                     m_pointState = ParserPointState::DoingPoint1;
                     m_pointCoordinateState = ParserPointCoordinateState::DoingPointX;
