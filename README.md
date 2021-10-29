@@ -4,4 +4,5 @@ Map compiler tools for the Duckie Game Engine. Processes maps created in an edit
 
 ## Features
 
-- Basically nothing yet lol
+- Class-based representation of Brushes and Entities
+- .map version 220 parser
