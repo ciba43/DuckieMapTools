@@ -31,6 +31,13 @@ namespace MapTools {
         void setPoint2(PlanePoint point);
         void setPoint3(PlanePoint point);
 
+        PlanePoint& point1() { return m_point1; }
+        PlanePoint& point2() { return m_point2; }
+        PlanePoint& point3() { return m_point3; }
+
+        const glm::vec3& normal() { return m_normal; }
+        const double& distance() { return m_distance; }
+
         void setTextureString(std::string texture);
 
         UV& UVstuff() { return m_uv; }
@@ -38,6 +45,9 @@ namespace MapTools {
         void setScaleU(float scaleU);
         void setScaleV(float scaleV);
     private:
+        glm::vec3 m_normal;
+        double m_distance;
+
         PlanePoint m_point1;
         PlanePoint m_point2;
         PlanePoint m_point3;
