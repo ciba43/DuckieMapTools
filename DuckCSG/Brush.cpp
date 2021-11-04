@@ -19,11 +19,11 @@ namespace MapTools {
 
     void Brush::createPolygons()
     {
-        for (size_t i = 0; i < m_planes.size() - 1; i++)
+        for (size_t i = 0; i < m_planes.size(); i++)
         {
-            for (size_t j = 0; j < m_planes.size() - 1; j++)
+            for (size_t j = 0; j < m_planes.size(); j++)
             {
-                for (size_t k = 0; k < m_planes.size() - 1; k++)
+                for (size_t k = 0; k < m_planes.size(); k++)
                 {
                     if (i != j != k)
                     {
