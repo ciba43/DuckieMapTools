@@ -50,18 +50,15 @@ namespace MapTools {
         auto secondPlane = m_planes.at(plane2);
         auto thirdPlane = m_planes.at(plane3);
 
-        double denominator = glm::dot(firstPlane->normal(), glm::cross(secondPlane->normal(),thirdPlane->normal()));
+        float denominator = glm::dot(firstPlane->normal(), glm::cross(secondPlane->normal(),thirdPlane->normal()));
 
         // Is there no intersection (planes are parallel)?
         if (denominator == 0)
-        {
             return { false, glm::vec3() };
-        }
 
-        glm::vec3 point;
-        point = -firstPlane->distance() * glm::cross(secondPlane->normal(), thirdPlane->normal());
+        glm::vec3 point = -firstPlane->distance() * glm::cross(secondPlane->normal(), thirdPlane->normal()) - secondPlane->distance() * glm::cross(thirdPlane->normal(), firstPlane->normal()) - thirdPlane->distance() * glm::cross(firstPlane->normal(), secondPlane->normal()) / denominator;
 
-        return std::pair<bool, glm::vec3>();
+        return { true, point };
     }
 
     bool Brush::isValid()
