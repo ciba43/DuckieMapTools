@@ -17,6 +17,9 @@
 #define TODO() { DC_CORE_CRITICAL("TODO hit in {0}:{1}", __FILE__, __LINE__); abort(); }
 #endif
 
+// Test helper macro
+#define RUN_TEST(testclass) { MapTools::testclass __##testClass_instance; auto result = __##testClass_instance.run(); if (result == MapTools::TestResult::Pass) { DC_CORE_INFO("{0}: PASS",  __##testClass_instance.number()); } else { DC_CORE_ERROR("{0}: FAIL : {1}", __##testClass_instance.number(), __##testClass_instance.failDescription()); }}
+
 // Unique pointers aka Scoped pointers
 template<typename T>
 using Scope = std::unique_ptr<T>;

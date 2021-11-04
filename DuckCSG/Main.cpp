@@ -1,7 +1,5 @@
 #include "duckpch.h"
 
-#include "Log.h"
-
 #include "MapParser.h"
 
 #ifdef RUN_TESTS_ON_STARTUP
@@ -16,13 +14,9 @@ int main(int argc, char** argv)
 #ifdef RUN_TESTS_ON_STARTUP
     // Run tests on startup
     DC_CORE_TRACE("Running tests ...");
-    MapTools::Test01ParseOneBrush test01;
-    auto result = test01.run();
 
-    if (result == MapTools::TestResult::Pass)
-        DC_CORE_INFO("01: PASS");
-    else
-        DC_CORE_ERROR("01: FAIL : {0}", test01.failDescription());
+    RUN_TEST(Test01ParseOneBrush);
+    RUN_TEST(Test02ValidateSimplePolygons);
 #endif
 
     // Parse a test file
