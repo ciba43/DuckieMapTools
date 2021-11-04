@@ -31,11 +31,10 @@ namespace MapTools {
                         if (i + 1 > m_polygons.size())
                             m_polygons.push_back(createRef<Polygon>());
                         auto intersection = getIntersection(i, j, k);
+
+                        // Skip if planes were parallel
                         if (!intersection.first)
-                        {
-                            DC_CORE_TRACE("Fake vertex");
                             continue;
-                        }
 
                         m_polygons.at(i)->addVertex(intersection.second);
                     }
