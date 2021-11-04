@@ -38,6 +38,8 @@ namespace MapTools {
         const glm::vec3& normal() { return m_normal; }
         const float& distance() { return m_distance; }
 
+        const std::string& texture() { return m_textureName; }
+
         void setTextureString(std::string texture);
 
         UV& UVstuff() { return m_uv; }

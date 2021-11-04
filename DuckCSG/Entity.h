@@ -26,7 +26,9 @@ namespace MapTools {
         void createPolygonsFromBrushes();
 
         size_t propertyCount() { return m_properties.size(); }
+        size_t brushCount() { return m_brushes.size(); }
         std::string findPropertySlow(std::string name);
+        Ref<Brush> brush(size_t index) { return m_brushes.at(index); }
     private:
         EntityType m_type;
         std::vector<std::pair<std::string, std::string>> m_properties;
