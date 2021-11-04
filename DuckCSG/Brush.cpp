@@ -62,7 +62,7 @@ namespace MapTools {
         if (denominator == 0)
             return { false, glm::vec3() };
 
-        glm::vec3 point = -firstPlane->distance() * glm::cross(secondPlane->normal(), thirdPlane->normal()) - secondPlane->distance() * glm::cross(thirdPlane->normal(), firstPlane->normal()) - thirdPlane->distance() * glm::cross(firstPlane->normal(), secondPlane->normal()) / denominator;
+        glm::vec3 point = (-firstPlane->distance() * glm::cross(secondPlane->normal(), thirdPlane->normal()) - secondPlane->distance() * glm::cross(thirdPlane->normal(), firstPlane->normal()) - thirdPlane->distance() * glm::cross(firstPlane->normal(), secondPlane->normal())) / denominator;
 
         return { true, point };
     }
