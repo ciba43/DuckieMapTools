@@ -25,18 +25,19 @@ int main(int argc, char** argv)
         DC_CORE_ERROR("01: FAIL : {0}", test01.failDescription());
 #endif
 
-    // Regular parsing
+    // Parse a test file
     MapTools::MapParser mapParser("tests/test01_fail.map");
 
     auto parserResult = mapParser.parse();
     if (parserResult == MapTools::ParseReturnState::OK)
-    {
         DC_CORE_INFO("All good :)");
-    }
     else
-    {
         DC_CORE_ERROR("Yikes, something went wrong");
-    }
+
+    // Create Polygons from Brushes
+    mapParser.createPolygonsFromBrushes();
+
+
 
     return 0;
 }

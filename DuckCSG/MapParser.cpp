@@ -485,6 +485,14 @@ namespace MapTools {
         return {};
     }
 
+    void MapParser::createPolygonsFromBrushes()
+    {
+        for (auto& entity : m_entities)
+        {
+            entity->createPolygonsFromBrushes();
+        }
+    }
+
     float MapParser::parseFloat(const std::string& string)
     {
         // TODO: This probably needs some safety checks

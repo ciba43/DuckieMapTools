@@ -80,6 +80,7 @@ namespace MapTools {
         // Get all of the parsed properties
         size_t entityCount() { return m_entities.size(); }
         Ref<Entity> entity(unsigned int handle);
+        void createPolygonsFromBrushes();
 
         static float parseFloat(const std::string& string);
         static bool isValidTextureNameCharacter(char character);

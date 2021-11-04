@@ -23,6 +23,8 @@ namespace MapTools {
         void pushProperty(std::string property, std::string value);
         void pushBrush(Ref<Brush> brush);
 
+        void createPolygonsFromBrushes();
+
         size_t propertyCount() { return m_properties.size(); }
         std::string findPropertySlow(std::string name);
     private:
