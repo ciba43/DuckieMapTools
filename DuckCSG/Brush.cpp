@@ -30,8 +30,14 @@ namespace MapTools {
                         // Create the polygon if it doesn't exist
                         if (i + 1 > m_polygons.size())
                             m_polygons.push_back(createRef<Polygon>());
-                        getIntersection(i, j, k);
-                        m_polygons.at(i)->addVertex();
+                        auto intersection = getIntersection(i, j, k);
+                        if (!intersection.first)
+                        {
+                            DC_CORE_TRACE("Fake vertex");
+                            continue;
+                        }
+
+                        m_polygons.at(i)->addVertex(intersection.second);
                     }
                 }
             }
