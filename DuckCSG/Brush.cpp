@@ -36,6 +36,10 @@ namespace MapTools {
                         if (!intersection.first)
                             continue;
 
+                        // Skip existing vertices
+                        if (isVertexInPolygon(i, intersection.second))
+                            continue;
+
                         m_polygons.at(i)->addVertex(intersection.second);
                     }
                 }
@@ -70,5 +74,10 @@ namespace MapTools {
     {
         // TODO:
         return false;
+    }
+
+    bool Brush::isVertexInPolygon(size_t polygon, const glm::vec3& vertex)
+    {
+        return m_polygons.at(polygon)->hasVertex(vertex);
     }
 }
