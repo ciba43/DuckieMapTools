@@ -411,13 +411,9 @@ namespace MapTools {
                     if (temporaryRotationOrUVScale.empty())
                         continue;
 
-                    // Texture rotation actually isn't used so it should be 0 in most cases
+                    // Texture rotation actually isn't used so it should be 0 in most cases, but log if it is used
                     if (temporaryRotationOrUVScale != "0")
-                    {
-                        DC_CORE_ERROR("[Parser] Setting texture rotation isn't supported");
-                        TODO();
-                        break;
-                    }
+                        DC_CORE_ERROR("[Parser] Setting texture rotation isn't supported, ignoring");
 
                     temporaryRotationOrUVScale.clear();
                     m_state = ParserState::InBrushReadingUScale;
