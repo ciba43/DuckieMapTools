@@ -53,6 +53,7 @@ namespace MapTools {
         foundTop = foundBottom = foundNorth = foundEast = foundSouth = foundWest = false;
 
 #define HAS_VERT(index) brush->polygon(polID)->hasVertex(legalVerts[index])
+#define HAS_FOUR() (brush->polygon(polID)->vertexCount() == 4)
 
         for (size_t polID = 0; polID < 6; polID++)
         {
@@ -67,6 +68,11 @@ namespace MapTools {
                     {
                         if (HAS_VERT(3))
                         {
+                            if (!HAS_FOUR())
+                            {
+                                setFailDescription("More than 4 vertices, while we did get valid 0, 1, 2, 3");
+                                return TestResult::Fail;
+                            }
                             // All is good, we've found top
                             if (!foundTop)
                             {
@@ -87,6 +93,11 @@ namespace MapTools {
                     {
                         if (HAS_VERT(5))
                         {
+                            if (!HAS_FOUR())
+                            {
+                                setFailDescription("More than 4 vertices, while we did get valid 0, 1, 4, 5");
+                                return TestResult::Fail;
+                            }
                             // All is good, we've found north
                             if (!foundNorth)
                             {
@@ -112,6 +123,11 @@ namespace MapTools {
                     {
                         if (HAS_VERT(6))
                         {
+                            if (!HAS_FOUR())
+                            {
+                                setFailDescription("More than 4 vertices, while we did get valid 0, 2, 4, 6");
+                                return TestResult::Fail;
+                            }
                             // All is good, we've found west
                             if (!foundWest)
                             {
@@ -142,6 +158,11 @@ namespace MapTools {
                     {
                         if (HAS_VERT(7))
                         {
+                            if (!HAS_FOUR())
+                            {
+                                setFailDescription("More than 4 vertices, while we did get valid 1, 3, 5, 7");
+                                return TestResult::Fail;
+                            }
                             // All is good, we've found east
                             if (!foundEast)
                             {
@@ -172,6 +193,11 @@ namespace MapTools {
                     {
                         if (HAS_VERT(7))
                         {
+                            if (!HAS_FOUR())
+                            {
+                                setFailDescription("More than 4 vertices, while we did get valid 2, 3, 6, 7");
+                                return TestResult::Fail;
+                            }
                             // All is good, we've found south
                             if (!foundSouth)
                             {
@@ -202,6 +228,11 @@ namespace MapTools {
                     {
                         if (HAS_VERT(7))
                         {
+                            if (!HAS_FOUR())
+                            {
+                                setFailDescription("More than 4 vertices, while we did get valid 4, 5, 6, 7");
+                                return TestResult::Fail;
+                            }
                             // All is good, we've found bottom
                             if (!foundBottom)
                             {
