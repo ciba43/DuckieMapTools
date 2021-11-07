@@ -36,4 +36,11 @@ namespace MapTools
         virtual TestResult run() override;
         virtual unsigned int number() override { return 2; }
     };
+
+    class Test03ValidateWithQuirkyAngles : public Test
+    {
+    public:
+        virtual TestResult run() override;
+        virtual unsigned int number() override { return 3; }
+    };
 }
