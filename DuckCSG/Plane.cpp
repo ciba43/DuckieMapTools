@@ -30,8 +30,8 @@ namespace MapTools {
         glm::vec3 p3 = { m_point3.x, m_point3.y, m_point3.z };
 
         // I don't know what I'm doing 
-        m_normal = glm::normalize(glm::cross(p3 - p2, p1 - p2));
-        m_distance = -glm::dot(m_normal, p1);
+        m_normal = glm::normalize(glm::cross(p3 - p1, p2 - p1));
+        m_distance = -glm::dot(m_normal, p3);
     }
 
     void Plane::setTextureString(std::string texture)
