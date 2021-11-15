@@ -5,6 +5,7 @@
 #include "Polygon.h"
 
 #include <glm/geometric.hpp>
+#include <glm/gtc/epsilon.hpp>
 
 namespace MapTools {
 
@@ -34,6 +35,23 @@ namespace MapTools {
 
                         // Skip if planes were parallel
                         if (!intersection.first)
+                            continue;
+
+                        // Make sure the point isn't outside the brush
+                        bool illegalVertex = false;
+                        for (size_t m = 0; m < m_planes.size(); m++)
+                        {
+                            auto dot = glm::dot(m_planes.at(m)->normal(), intersection.second);
+                            auto dist = m_planes.at(m)->distance();
+
+                            if (glm::epsilonEqual(dot + dist, 0.0f, 0.01f) || dot + dist < 0)
+                                continue;
+
+                            illegalVertex = true;
+                        }
+
+                        // Skip illegal vertices
+                        if (illegalVertex)
                             continue;
 
                         // Skip existing vertices
