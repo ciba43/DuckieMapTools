@@ -17,10 +17,11 @@ int main(int argc, char** argv)
 
     RUN_TEST(Test01ParseOneBrush);
     RUN_TEST(Test02ValidateSimplePolygons);
+    RUN_TEST(Test03ValidateWithQuirkyAngles);
 #endif
 
     // Parse a test file
-    MapTools::MapParser mapParser("tests/test01_fail.map");
+    MapTools::MapParser mapParser("tests/test03_invalid_intersection.map");
 
     auto parserResult = mapParser.parse();
     if (parserResult == MapTools::ParseReturnState::OK)
