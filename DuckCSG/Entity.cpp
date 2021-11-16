@@ -11,7 +11,6 @@ namespace MapTools {
 
     Entity::~Entity()
     {
-        DC_CORE_TRACE("Entity destructor called. Bye");
     }
 
     void Entity::pushProperty(std::string property, std::string value)
