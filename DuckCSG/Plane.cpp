@@ -39,6 +39,12 @@ namespace MapTools {
         m_textureName = texture;
     }
 
+    void Plane::setTextureRotation(float rotation)
+    {
+        m_rotation = rotation;
+        m_isRotationSet = true;
+    }
+
     void Plane::setScaleU(float scaleU)
     {
         m_scaleU = scaleU;

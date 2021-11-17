@@ -44,6 +44,8 @@ namespace MapTools {
 
         UV& UVstuff() { return m_uv; }
 
+        void setTextureRotation(float rotation);
+
         void setScaleU(float scaleU);
         void setScaleV(float scaleV);
     private:
@@ -53,8 +55,10 @@ namespace MapTools {
         PlanePoint m_point1;
         PlanePoint m_point2;
         PlanePoint m_point3;
-        UV m_uv;
         std::string m_textureName;
+        UV m_uv;
+        float m_rotation = 0.0f;
+        bool m_isRotationSet = false;
         float m_scaleU;
         float m_scaleV;
     };
