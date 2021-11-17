@@ -17,6 +17,7 @@ namespace MapTools {
         void pushPlane(Ref<Plane> plane);
 
         void createPolygons();
+        void calculateTextureCoordinates();
 
         std::pair<bool, glm::vec3> getIntersection(size_t plane1, size_t plane2, size_t plane3);
 

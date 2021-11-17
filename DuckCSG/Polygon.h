@@ -6,6 +6,8 @@
 
 namespace MapTools {
 
+    class Plane;
+
     class Vertex
     {
     public:
@@ -26,6 +28,7 @@ namespace MapTools {
 
         void addVertex(glm::vec3 vertex) { m_vertices.push_back(Vertex(vertex)); }
 
+        void calculateUVsForVertices(Ref<Plane> plane);
         size_t vertexCount() { return m_vertices.size(); }
         bool hasVertex(const glm::vec3& vertex);
     private:

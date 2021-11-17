@@ -8,7 +8,12 @@
 
 namespace MapTools {
 
-    bool Polygon::hasVertex(const glm::vec3 & vertex)
+    void Polygon::calculateUVsForVertices(Ref<Plane> plane)
+    {
+        // TODO: this
+    }
+
+    bool Polygon::hasVertex(const glm::vec3& vertex)
     {
         for (auto& vert : m_vertices)
         {

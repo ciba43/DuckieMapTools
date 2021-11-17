@@ -65,6 +65,14 @@ namespace MapTools {
         }
     }
 
+    void Brush::calculateTextureCoordinates()
+    {
+        for (size_t i = 0; i < m_polygons.size(); i++)
+        {
+            m_polygons.at(i)->calculateUVsForVertices(m_planes.at(i));
+        }
+    }
+
     std::pair<bool, glm::vec3> Brush::getIntersection(size_t plane1, size_t plane2, size_t plane3)
     {
         if (plane1 > m_planes.size() || plane2 > m_planes.size() || plane3 > m_planes.size())
