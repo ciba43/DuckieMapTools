@@ -77,6 +77,8 @@ namespace MapTools {
         // Do the actual parsing
         ParseReturnState parse();
 
+        const std::string& mapName() { return m_map; }
+
         // Get all of the parsed properties
         size_t entityCount() { return m_entities.size(); }
         Ref<Entity> entity(unsigned int handle);
