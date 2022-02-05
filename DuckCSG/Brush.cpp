@@ -65,6 +65,25 @@ namespace MapTools {
         }
     }
 
+    std::vector<std::string> Brush::generateListOfAllUsedTextures()
+    {
+        std::vector<std::string> textures;
+
+        for (auto& plane : m_planes)
+        {
+            bool wasTextureFound = false;
+            for (auto& texture : textures)
+            {
+                if (texture == plane->texture())
+                    wasTextureFound = true;
+            }
+            if (!wasTextureFound)
+                textures.push_back(plane->texture());
+        }
+
+        return textures;
+    }
+
     void Brush::calculateTextureCoordinates()
     {
         for (size_t i = 0; i < m_polygons.size(); i++)

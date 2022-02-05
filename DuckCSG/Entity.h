@@ -24,6 +24,7 @@ namespace MapTools {
         void pushBrush(Ref<Brush> brush);
 
         void createPolygonsFromBrushes();
+        std::vector<std::string> generateListOfAllUsedTextures();
 
         size_t propertyCount() { return m_properties.size(); }
         size_t brushCount() { return m_brushes.size(); }

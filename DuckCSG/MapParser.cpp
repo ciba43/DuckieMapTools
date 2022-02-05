@@ -492,6 +492,30 @@ namespace MapTools {
         }
     }
 
+    void MapParser::generateListOfAllUsedTextures()
+    {
+        for (auto& entity : m_entities)
+        {
+            auto texturesUsed = entity->generateListOfAllUsedTextures();
+            for (auto& texture : texturesUsed)
+            {
+                auto iterator = std::find_if(m_usedTextures.begin(), m_usedTextures.end(), [&texture](const TextureInfo& x) { return texture == x.name; });
+                if (iterator == m_usedTextures.end())
+                {
+                    TextureInfo info;
+                    info.name = texture;
+                    m_usedTextures.push_back(std::move(info));
+                }
+            }
+        }
+
+        DC_CORE_TRACE("List of all used textures: ");
+        for (auto& texture : m_usedTextures)
+        {
+            DC_CORE_TRACE("  {0}", texture.name);
+        }
+    }
+
     float MapParser::parseFloat(const std::string& string)
     {
         // TODO: This probably needs some safety checks

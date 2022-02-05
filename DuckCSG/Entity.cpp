@@ -31,6 +31,24 @@ namespace MapTools {
         }
     }
 
+    std::vector<std::string> Entity::generateListOfAllUsedTextures()
+    {
+        std::vector<std::string> textures;
+
+        for (auto& brush : m_brushes)
+        {
+            auto texturesUsed = brush->generateListOfAllUsedTextures();
+            for (auto& texture : texturesUsed)
+            {
+                auto iterator = std::find(textures.begin(), textures.end(), texture);
+                if (iterator == textures.end())
+                    textures.push_back(texture);
+            }
+        }
+
+        return textures;
+    }
+
     std::string Entity::findPropertySlow(std::string name)
     {
         auto iterator = std::find_if(m_properties.begin(), m_properties.end(), [&](const std::pair<std::string, std::string>& entry) {

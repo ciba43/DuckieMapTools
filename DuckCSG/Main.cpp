@@ -40,6 +40,7 @@ int main(int argc, char** argv)
     mapParser.createPolygonsFromBrushes();
     
     // Step 3: Generate a list of all necessary textures
+    mapParser.generateListOfAllUsedTextures();
     
     // Step 4: Attempt to acquire the dimensions of the used texture
 

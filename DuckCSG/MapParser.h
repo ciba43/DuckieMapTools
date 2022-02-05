@@ -12,6 +12,13 @@ namespace MapTools {
     class Plane;
     struct PlanePoint;
 
+    struct TextureInfo
+    {
+        std::string name;
+        unsigned int width = 0;
+        unsigned int height = 0;
+    };
+
     enum class ParseReturnState
     {
         OK,
@@ -82,7 +89,9 @@ namespace MapTools {
         // Get all of the parsed properties
         size_t entityCount() { return m_entities.size(); }
         Ref<Entity> entity(unsigned int handle);
+
         void createPolygonsFromBrushes();
+        void generateListOfAllUsedTextures();
 
         static float parseFloat(const std::string& string);
         static bool isValidTextureNameCharacter(char character);
@@ -98,5 +107,7 @@ namespace MapTools {
         std::string m_map;
         bool m_parsed = false;
         std::vector<Ref<Entity>> m_entities;
+
+        std::vector<TextureInfo> m_usedTextures;
     };
 }
