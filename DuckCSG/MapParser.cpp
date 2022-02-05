@@ -1,6 +1,8 @@
 #include "duckpch.h"
 #include "MapParser.h"
 
+#include <stb_image.h>
+
 #include "Brush.h"
 #include "Entity.h"
 #include "Plane.h"
@@ -508,11 +510,48 @@ namespace MapTools {
                 }
             }
         }
+    }
+
+    void MapParser::acquireDimensionsForUsedTextures()
+    {
+        // "../materials/IMPORTED/bsp" is the currently expected path for texturs
+        auto basePath = std::filesystem::current_path().parent_path() /= "materials/IMPORTED/bsp";
+
+        for (auto& texture : m_usedTextures)
+        {
+            auto path = (basePath / texture.name);
+            path.replace_extension(".png");
+
+            // Skip if not found
+            if (!std::filesystem::exists(path))
+            {
+                DC_CORE_TRACE("  {0} not found, setting up as ERROR", texture.name + ".png");
+                continue;
+            }
+
+            auto data = stbi_load((path).u8string().c_str(), &texture.width, &texture.height, nullptr, 0);
+            stbi_image_free(data);
+
+            // Some sanity checks
+            if (texture.width > 65536 || texture.width < 0)
+            {
+                DC_CORE_WARN("{1}, Malformed texture width: {0}", texture.width, texture.name + ".png");
+                continue;
+            }
+            if (texture.height > 65536 || texture.height < 0)
+            {
+                DC_CORE_WARN("{1}, Malformed texture height: {0}", texture.height, texture.name + ".png");
+                continue;
+            }
+
+            // Finally, if everything is good, just set it as all good
+            texture.missing = false;
+        }
 
         DC_CORE_TRACE("List of all used textures: ");
         for (auto& texture : m_usedTextures)
         {
-            DC_CORE_TRACE("  {0}", texture.name);
+            DC_CORE_TRACE("  {0} => {1}x{2}", texture.name, texture.width, texture.height);
         }
     }
 

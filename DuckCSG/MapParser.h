@@ -15,8 +15,9 @@ namespace MapTools {
     struct TextureInfo
     {
         std::string name;
-        unsigned int width = 0;
-        unsigned int height = 0;
+        int width = 4;  // Default Duckie error texture is 4x4
+        int height = 4;
+        bool missing = true;
     };
 
     enum class ParseReturnState
@@ -92,6 +93,7 @@ namespace MapTools {
 
         void createPolygonsFromBrushes();
         void generateListOfAllUsedTextures();
+        void acquireDimensionsForUsedTextures();
 
         static float parseFloat(const std::string& string);
         static bool isValidTextureNameCharacter(char character);

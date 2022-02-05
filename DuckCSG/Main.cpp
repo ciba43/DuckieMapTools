@@ -43,6 +43,7 @@ int main(int argc, char** argv)
     mapParser.generateListOfAllUsedTextures();
 
     // Step 4: Attempt to acquire the dimensions of the used texture
+    mapParser.acquireDimensionsForUsedTextures();
 
     // Step 5: Calculate texture coordinates for each point
 
