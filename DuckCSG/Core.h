@@ -39,3 +39,13 @@ constexpr Ref<T> createRef(Args&& ... args)
 {
     return std::make_shared<T>(std::forward<Args>(args)...);
 }
+
+// Weak pointers aka Weak reference
+template<typename T>
+using WeakRef = std::weak_ptr<T>;
+
+template<typename T, typename ... Args>
+constexpr Ref<T> createWeakRef(Args&& ... args)
+{
+    return std::weak_ptr<T>(std::forward<Args>(args)...);
+}
