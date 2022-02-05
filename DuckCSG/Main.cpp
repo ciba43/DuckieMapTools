@@ -38,10 +38,10 @@ int main(int argc, char** argv)
 
     // Step 2: Create Polygons from Brushes
     mapParser.createPolygonsFromBrushes();
-    
+
     // Step 3: Generate a list of all necessary textures
     mapParser.generateListOfAllUsedTextures();
-    
+
     // Step 4: Attempt to acquire the dimensions of the used texture
 
     // Step 5: Calculate texture coordinates for each point
