@@ -14,7 +14,49 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories
 includeDir = {}
 includeDir["glm"] = "subprojects/glm"
+includeDir["stb_image"] = "subprojects/stb_image/stb-repo"
 includeDir["spdlog"] = "subprojects/spdlog/include"
+
+-- stb_image project premake
+project "stb_image"
+    location "subprojects/stb_image"
+    kind "StaticLib"
+    language "C++"
+    cppdialect "C++17"
+    staticruntime "On"
+
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("temp/" .. outputdir .. "/%{prj.name}")
+
+    files
+    {
+        "%{prj.location}/stb-repo/stb_image.h",
+        "%{prj.location}/*.cpp"
+    }
+
+    includedirs
+    {
+        "%{includeDir.stb_image}"
+    }
+
+    defines
+    {
+        "_CRT_SECURE_NO_WARNINGS"
+    }
+
+    filter "system:linux"
+        pic "On"
+
+    filter "system:windows"
+        systemversion "latest"
+
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "on"
+
+    filter "configurations:Release"
+        runtime "Release"
+        optimize "on"
 
 -- spdlog project premake
 project "spdlog"
@@ -78,7 +120,13 @@ project "DuckCSG"
     {
         "%{prj.location}",
         "%{includeDir.spdlog}",
+        "%{includeDir.stb_image}",
         "%{includeDir.glm}"
+    }
+
+    links
+    {
+        "stb_image"
     }
 
     filter "system:linux"
