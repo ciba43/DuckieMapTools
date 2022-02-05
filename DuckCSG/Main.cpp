@@ -20,19 +20,30 @@ int main(int argc, char** argv)
     RUN_TEST(Test03ValidateWithQuirkyAngles);
 #endif
 
-    // Parse a test file
+    // Step 1: Parse a test file
     MapTools::MapParser mapParser("tests/test03_invalid_intersection.map");
 
     auto parserResult = mapParser.parse();
-    if (parserResult == MapTools::ParseReturnState::OK)
-        DC_CORE_INFO("All good :)");
-    else
-        DC_CORE_ERROR("Yikes, something went wrong");
+    switch (parserResult)
+    {
+    case MapTools::ParseReturnState::OK:
+        break;
+    case MapTools::ParseReturnState::MissingFile:
+        DC_CORE_ERROR("Error: Missing input file {0}", mapParser.mapName());
+        return 1;
+    default:
+        DC_CORE_CRITICAL("Fatal error during compilation, exiting");
+        return 1;
+    }
 
-    // Create Polygons from Brushes
+    // Step 2: Create Polygons from Brushes
     mapParser.createPolygonsFromBrushes();
+    
+    // Step 3: Generate a list of all necessary textures
+    
+    // Step 4: Attempt to acquire the dimensions of the used texture
 
-
+    // Step 5: Calculate texture coordinates for each point
 
     return 0;
 }
