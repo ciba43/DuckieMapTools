@@ -10,6 +10,7 @@ int main(int argc, char** argv)
     DuckCSG::Log::init();
 
     DC_CORE_INFO("DuckCSG map compiler for Duckie game engine");
+    DC_CORE_TRACE("Argument parsing isn't implemented, working on a test map ...");
 
 #ifdef RUN_TESTS_ON_STARTUP
     // Run tests on startup
@@ -21,12 +22,15 @@ int main(int argc, char** argv)
 #endif
 
     // Step 1: Parse a test file
+    DC_CORE_INFO("[step1]: Creating a parser object ...");
     MapTools::MapParser mapParser("tests/test03_invalid_intersection.map");
 
+    DC_CORE_INFO("[step1]: Parsing map ...");
     auto parserResult = mapParser.parse();
     switch (parserResult)
     {
     case MapTools::ParseReturnState::OK:
+        DC_CORE_TRACE("Map parsed successfully");
         break;
     case MapTools::ParseReturnState::MissingFile:
         DC_CORE_ERROR("Error: Missing input file {0}", mapParser.mapName());
@@ -37,15 +41,19 @@ int main(int argc, char** argv)
     }
 
     // Step 2: Create Polygons from Brushes
+    DC_CORE_INFO("[step2]: Creating polygons from brushes ...");
     mapParser.createPolygonsFromBrushes();
 
     // Step 3: Generate a list of all necessary textures
+    DC_CORE_INFO("[step3]: Generating a list of all used textures ...");
     mapParser.generateListOfAllUsedTextures();
 
-    // Step 4: Attempt to acquire the dimensions of the used texture
+    // Step 4: Attempt to acquire dimensions for all used textures
+    DC_CORE_INFO("[step4]: Attempting to acquire dimensions for all used textures ...");
     mapParser.acquireDimensionsForUsedTextures();
 
     // Step 5: Calculate texture coordinates for each point
+    DC_CORE_INFO("[step5]: Calculating texture coordinates for each point ...");
     mapParser.calculateTextureCoordinates();
 
     return 0;
