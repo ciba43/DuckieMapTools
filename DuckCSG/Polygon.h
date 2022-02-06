@@ -8,6 +8,8 @@ namespace MapTools {
 
     class Plane;
 
+    struct TextureInfo;
+
     class Vertex
     {
     public:
@@ -28,7 +30,7 @@ namespace MapTools {
 
         void addVertex(glm::vec3 vertex) { m_vertices.push_back(Vertex(vertex)); }
 
-        void calculateUVsForVertices(Ref<Plane> plane);
+        void calculateUVsForVertices(Ref<Plane> plane, const std::vector<TextureInfo>& usedTextures);
         size_t vertexCount() { return m_vertices.size(); }
         bool hasVertex(const glm::vec3& vertex);
     private:

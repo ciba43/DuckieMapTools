@@ -555,6 +555,14 @@ namespace MapTools {
         }
     }
 
+    void MapParser::calculateTextureCoordinates()
+    {
+        for (auto& entity : m_entities)
+        {
+            entity->calculateTextureCoordinates(m_usedTextures);
+        }
+    }
+
     float MapParser::parseFloat(const std::string& string)
     {
         // TODO: This probably needs some safety checks

@@ -49,6 +49,14 @@ namespace MapTools {
         return textures;
     }
 
+    void Entity::calculateTextureCoordinates(const std::vector<TextureInfo>& usedTextures)
+    {
+        for (auto& brush : m_brushes)
+        {
+            brush->calculateTextureCoordinates(usedTextures);
+        }
+    }
+
     std::string Entity::findPropertySlow(std::string name)
     {
         auto iterator = std::find_if(m_properties.begin(), m_properties.end(), [&](const std::pair<std::string, std::string>& entry) {

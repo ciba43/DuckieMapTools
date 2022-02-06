@@ -4,11 +4,12 @@
 #include <glm/vec3.hpp>
 #include <glm/geometric.hpp>
 
+#include "MapParser.h"
 #include "Plane.h"
 
 namespace MapTools {
 
-    void Polygon::calculateUVsForVertices(Ref<Plane> plane)
+    void Polygon::calculateUVsForVertices(Ref<Plane> plane, const std::vector<TextureInfo>& usedTextures)
     {
         // TODO: this
     }

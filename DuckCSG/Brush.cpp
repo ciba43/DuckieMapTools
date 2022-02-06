@@ -84,11 +84,11 @@ namespace MapTools {
         return textures;
     }
 
-    void Brush::calculateTextureCoordinates()
+    void Brush::calculateTextureCoordinates(const std::vector<TextureInfo>& usedTextures)
     {
         for (size_t i = 0; i < m_polygons.size(); i++)
         {
-            m_polygons.at(i)->calculateUVsForVertices(m_planes.at(i));
+            m_polygons.at(i)->calculateUVsForVertices(m_planes.at(i), usedTextures);
         }
     }
 

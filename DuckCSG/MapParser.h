@@ -94,6 +94,7 @@ namespace MapTools {
         void createPolygonsFromBrushes();
         void generateListOfAllUsedTextures();
         void acquireDimensionsForUsedTextures();
+        void calculateTextureCoordinates();
 
         static float parseFloat(const std::string& string);
         static bool isValidTextureNameCharacter(char character);
