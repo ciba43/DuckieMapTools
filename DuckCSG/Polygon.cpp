@@ -9,9 +9,29 @@
 
 namespace MapTools {
 
-    void Polygon::calculateUVsForVertices(Ref<Plane> plane, const std::vector<TextureInfo>& usedTextures)
+    void Polygon::calculateUVsForVertices(const std::vector<TextureInfo>& usedTextures)
     {
-        // TODO: this
+        auto plane = m_planeFriend.lock();
+        
+        // Find the correct texture info struct
+        auto texture = std::find_if(usedTextures.begin(), usedTextures.end(), [&plane](const TextureInfo& texinfo) { return texinfo.name == plane->texture(); });
+
+        // Crash if that somehow doesn't exist (means texture info building process must've failed)
+        if (texture == usedTextures.end())
+        {
+            DC_CORE_CRITICAL("Internal TextureInfo list missing texture. This should never happen");
+            VERIFY_NOT_REACHED();
+        }
+
+        for (auto& vertex : m_vertices)
+        {
+            float u = glm::dot(vertex.position(), plane->UVstuff().normalU) / texture->width / plane->scaleU();
+            u += plane->UVstuff().shiftU / texture->width;
+
+            float v = glm::dot(vertex.position(), plane->UVstuff().normalV) / texture->height / plane->scaleV();
+            v += plane->UVstuff().shiftV / texture->height;
+            vertex.setUV({ u, v });
+        }
     }
 
     bool Polygon::hasVertex(const glm::vec3& vertex)

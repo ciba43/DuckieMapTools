@@ -30,7 +30,7 @@ namespace MapTools {
                     {
                         // Create the polygon if it doesn't exist
                         if (i + 1 > m_polygons.size())
-                            m_polygons.push_back(createRef<Polygon>());
+                            m_polygons.push_back(createRef<Polygon>(m_planes.at(i)));
                         auto intersection = getIntersection(i, j, k);
 
                         // Skip if planes were parallel
@@ -88,7 +88,7 @@ namespace MapTools {
     {
         for (size_t i = 0; i < m_polygons.size(); i++)
         {
-            m_polygons.at(i)->calculateUVsForVertices(m_planes.at(i), usedTextures);
+            m_polygons.at(i)->calculateUVsForVertices(usedTextures);
         }
     }
 

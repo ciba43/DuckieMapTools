@@ -48,6 +48,8 @@ namespace MapTools {
 
         void setScaleU(float scaleU);
         void setScaleV(float scaleV);
+        float& scaleU() { return m_scaleU; }
+        float& scaleV() { return m_scaleV; }
     private:
         glm::vec3 m_normal;
         float m_distance;
