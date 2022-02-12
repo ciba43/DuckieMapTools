@@ -92,6 +92,14 @@ namespace MapTools {
         }
     }
 
+    void Brush::sortVertices()
+    {
+        for (auto& polygon : m_polygons)
+        {
+            polygon->sortVertices();
+        }
+    }
+
     std::pair<bool, glm::vec3> Brush::getIntersection(size_t plane1, size_t plane2, size_t plane3)
     {
         if (plane1 > m_planes.size() || plane2 > m_planes.size() || plane3 > m_planes.size())

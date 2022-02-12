@@ -563,6 +563,14 @@ namespace MapTools {
         }
     }
 
+    void MapParser::sortVertices()
+    {
+        for (auto& entity : m_entities)
+        {
+            entity->sortVertices();
+        }
+    }
+
     float MapParser::parseFloat(const std::string& string)
     {
         // TODO: This probably needs some safety checks

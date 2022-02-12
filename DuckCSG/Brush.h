@@ -21,6 +21,7 @@ namespace MapTools {
         void createPolygons();
         std::vector<std::string> generateListOfAllUsedTextures();
         void calculateTextureCoordinates(const std::vector<TextureInfo>& usedTextures);
+        void sortVertices();
 
         std::pair<bool, glm::vec3> getIntersection(size_t plane1, size_t plane2, size_t plane3);
 

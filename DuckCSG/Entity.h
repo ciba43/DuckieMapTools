@@ -28,6 +28,7 @@ namespace MapTools {
         void createPolygonsFromBrushes();
         std::vector<std::string> generateListOfAllUsedTextures();
         void calculateTextureCoordinates(const std::vector<TextureInfo>& usedTextures);
+        void sortVertices();
 
         size_t propertyCount() { return m_properties.size(); }
         size_t brushCount() { return m_brushes.size(); }

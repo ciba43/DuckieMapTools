@@ -95,6 +95,7 @@ namespace MapTools {
         void generateListOfAllUsedTextures();
         void acquireDimensionsForUsedTextures();
         void calculateTextureCoordinates();
+        void sortVertices();
 
         static float parseFloat(const std::string& string);
         static bool isValidTextureNameCharacter(char character);

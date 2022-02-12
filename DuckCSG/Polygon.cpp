@@ -34,6 +34,22 @@ namespace MapTools {
         }
     }
 
+    void Polygon::sortVertices()
+    {
+        if (!m_vertices.size())
+            return;
+
+        glm::vec3 center{0.0f};
+
+        for (auto& vertex : m_vertices)
+        {
+            center += vertex.position();
+        }
+        center /= m_vertices.size();
+
+        DC_CORE_INFO("{0},  {1},  {2}", center.x, center.y, center.z);
+    }
+
     bool Polygon::hasVertex(const glm::vec3& vertex)
     {
         for (auto& vert : m_vertices)

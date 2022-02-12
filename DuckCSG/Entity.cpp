@@ -57,6 +57,14 @@ namespace MapTools {
         }
     }
 
+    void Entity::sortVertices()
+    {
+        for (auto& brush : m_brushes)
+        {
+            brush->sortVertices();
+        }
+    }
+
     std::string Entity::findPropertySlow(std::string name)
     {
         auto iterator = std::find_if(m_properties.begin(), m_properties.end(), [&](const std::pair<std::string, std::string>& entry) {

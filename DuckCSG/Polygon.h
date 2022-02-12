@@ -32,6 +32,8 @@ namespace MapTools {
         void addVertex(glm::vec3 vertex) { m_vertices.push_back(Vertex(vertex)); }
 
         void calculateUVsForVertices(const std::vector<TextureInfo>& usedTextures);
+        void sortVertices();
+
         size_t vertexCount() { return m_vertices.size(); }
         bool hasVertex(const glm::vec3& vertex);
     private:
