@@ -16,6 +16,7 @@ builddir/
 *.vcxproj.filters
 *.vcxproj.users
 imgui.ini
+*.png
 *.bsp
 # Just to ignore profiling results
 *.json
