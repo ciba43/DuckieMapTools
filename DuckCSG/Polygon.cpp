@@ -50,11 +50,19 @@ namespace MapTools {
 
         DC_CORE_INFO("{0},  {1},  {2}", center.x, center.y, center.z);
 
-
-        for (size_t i = 0; i < m_vertices.size() - 2; i++)
+        DC_CORE_TRACE("normalized");
+        for (int i = 0; i < m_vertices.size() - 2; i++)
         {
             glm::vec3 vert_one = glm::normalize(m_vertices[i].position() - center);
-            // DC_CORE_TRACE("vert_one {0}", vert_one);
+            DC_CORE_TRACE("vert_one: {0}  {1}  {2}", vert_one.x, vert_one.y, vert_one.z);
+
+            double smallestAngle = -1;
+            int smallestIndex = -1;
+            for (int j = i + 1; j < m_vertices.size(); j++)
+            {
+                /* code */
+            }
+
         }
     }
 
