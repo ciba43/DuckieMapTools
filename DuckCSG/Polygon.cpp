@@ -12,7 +12,7 @@ namespace MapTools {
     void Polygon::calculateUVsForVertices(const std::vector<TextureInfo>& usedTextures)
     {
         auto plane = m_planeFriend.lock();
-        
+
         // Find the correct texture info struct
         auto texture = std::find_if(usedTextures.begin(), usedTextures.end(), [&plane](const TextureInfo& texinfo) { return texinfo.name == plane->texture(); });
 
@@ -54,7 +54,7 @@ namespace MapTools {
         for (size_t i = 0; i < m_vertices.size() - 2; i++)
         {
             glm::vec3 vert_one = glm::normalize(m_vertices[i].position() - center);
-            DC_CORE_TRACE("vert_one {0}", vert_one);
+            // DC_CORE_TRACE("vert_one {0}", vert_one);
         }
     }
 

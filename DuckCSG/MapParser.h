@@ -52,7 +52,7 @@ namespace MapTools {
 
     enum class ParserPointState
     {
-        Outside, 
+        Outside,
         DoingPoint1, // Expecting point 1 is already done by ParserState::InBrushExpectingPlaneOrEnd
         ExpectingPoint2,
         DoingPoint2,
