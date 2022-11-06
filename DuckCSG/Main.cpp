@@ -57,8 +57,11 @@ int main(int argc, char** argv)
     mapParser.calculateTextureCoordinates();
 
     // Step 6: Perform texture coordinate normalization
+    DC_CORE_INFO("[step6]: Performing texture coordinate normalization ...");
+    DC_CORE_WARN("THIS STEP ISN'T DONE");
 
     // Step 7: Sort vertices
+    DC_CORE_INFO("[step7]: Sorting vertices ...");
     mapParser.sortVertices();
 
     return 0;
