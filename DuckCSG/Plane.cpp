@@ -2,12 +2,16 @@
 #include "Plane.h"
 
 #include <glm/vec3.hpp>
+#include <glm/gtc/constants.hpp>
 #include <glm/geometric.hpp>
 
 namespace MapTools {
 
-    Plane::Plane()
+    Plane::Plane(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3)
     {
+        setPoint1(p1);
+        setPoint2(p2);
+        setPoint3(p3);
     }
 
     void Plane::setPoint1(PlanePoint point)
@@ -53,5 +57,16 @@ namespace MapTools {
     void Plane::setScaleV(float scaleV)
     {
         m_scaleV = scaleV;
+    }
+
+    PointType Plane::classifyPoint(const glm::vec3& point)
+    {
+        double distance = glm::dot(m_normal, point) + m_distance;
+        if (distance > glm::epsilon<double>())
+            return PointType::InFront;
+        else if (distance < -glm::epsilon<double>())
+            return PointType::InBack;
+
+        return PointType::OnPlane;
     }
 }

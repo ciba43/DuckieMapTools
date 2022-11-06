@@ -39,31 +39,46 @@ namespace MapTools {
         if (!m_vertices.size())
             return;
 
-        glm::vec3 center{0.0f};
-
         // Find center point
+        glm::vec3 center{0.0f};
         for (auto& vertex : m_vertices)
         {
             center += vertex.position();
         }
         center /= m_vertices.size();
 
-        DC_CORE_INFO("{0},  {1},  {2}", center.x, center.y, center.z);
-
-        DC_CORE_TRACE("normalized");
+        auto plane = m_planeFriend.lock();
         for (int i = 0; i < m_vertices.size() - 2; i++)
         {
             glm::vec3 vert_one = glm::normalize(m_vertices[i].position() - center);
-            DC_CORE_TRACE("vert_one: {0}  {1}  {2}", vert_one.x, vert_one.y, vert_one.z);
+            Plane skipPlane = Plane(m_vertices[i].position(), center, plane->normal());
 
             double smallestAngle = -1;
             int smallestIndex = -1;
             for (int j = i + 1; j < m_vertices.size(); j++)
             {
-                /* code */
+                if (skipPlane.classifyPoint(m_vertices[j].position()) != PointType::InBack) {
+                    glm::vec3 vert_two = glm::normalize(m_vertices[j].position() - center);
+                    float angle = glm::dot(vert_one, vert_two);
+                    if (angle > smallestAngle) {
+                        smallestAngle = angle;
+                        smallestIndex = j;
+                    }
+                }
             }
 
+            // This should never fail
+            if (smallestAngle == -1) {
+                DC_CORE_CRITICAL("Polygon sorting failed, idk how");
+                return;
+            }
+
+            // Swap them around
+            auto oldSmallest = m_vertices[smallestIndex];
+            m_vertices[smallestIndex] = m_vertices[i + 1];
+            m_vertices[i + 1] = oldSmallest;
         }
+
     }
 
     bool Polygon::hasVertex(const glm::vec3& vertex)

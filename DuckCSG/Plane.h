@@ -11,6 +11,16 @@ namespace MapTools {
         float x;
         float y;
         float z;
+
+        PlanePoint() {}
+        PlanePoint(glm::vec3 pos) : x(pos.x), y(pos.y), z(pos.z) {}
+    };
+
+    enum class PointType
+    {
+        InFront,
+        OnPlane,
+        InBack
     };
 
     struct UV
@@ -25,7 +35,8 @@ namespace MapTools {
     class Plane
     {
     public:
-        Plane();
+        Plane() {}
+        Plane(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);
 
         void setPoint1(PlanePoint point);
         void setPoint2(PlanePoint point);
@@ -50,6 +61,8 @@ namespace MapTools {
         void setScaleV(float scaleV);
         float& scaleU() { return m_scaleU; }
         float& scaleV() { return m_scaleV; }
+
+        PointType classifyPoint(const glm::vec3& point);
     private:
         glm::vec3 m_normal;
         float m_distance;
