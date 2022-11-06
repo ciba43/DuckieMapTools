@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
     // Step 1: Parse a test file
     DC_CORE_INFO("[step1]: Creating a parser object ...");
-    MapTools::MapParser mapParser("tests/test03_invalid_intersection.map");
+    MapTools::MapParser mapParser("Tests/test03_invalid_intersection.map");
 
     DC_CORE_INFO("[step1]: Parsing map ...");
     auto parserResult = mapParser.parse();
