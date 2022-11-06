@@ -41,6 +41,7 @@ namespace MapTools {
 
         glm::vec3 center{0.0f};
 
+        // Find center point
         for (auto& vertex : m_vertices)
         {
             center += vertex.position();
@@ -48,6 +49,13 @@ namespace MapTools {
         center /= m_vertices.size();
 
         DC_CORE_INFO("{0},  {1},  {2}", center.x, center.y, center.z);
+
+
+        for (size_t i = 0; i < m_vertices.size() - 2; i++)
+        {
+            glm::vec3 vert_one = glm::normalize(m_vertices[i].position() - center);
+            DC_CORE_TRACE("vert_one {0}", vert_one);
+        }
     }
 
     bool Polygon::hasVertex(const glm::vec3& vertex)
