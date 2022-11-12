@@ -74,11 +74,16 @@ namespace MapTools {
             }
 
             // Swap them around
-            auto oldSmallest = m_vertices[smallestIndex];
-            m_vertices[smallestIndex] = m_vertices[i + 1];
-            m_vertices[i + 1] = oldSmallest;
+            // auto oldSmallest = m_vertices[smallestIndex];
+            // m_vertices[smallestIndex] = m_vertices[i + 1];
+            // m_vertices[i + 1] = oldSmallest;
+            // TODO: This may be a simpler way to do it but I'd like some testing here
+            std::swap(m_vertices[smallestIndex], m_vertices[i + 1]);
         }
 
+        // Even though we sorted, it's possible that it may be pointing in to the wrong direction
+        // So we need to detect that and flip everything if that's the case
+        // TODO
     }
 
     bool Polygon::hasVertex(const glm::vec3& vertex)
